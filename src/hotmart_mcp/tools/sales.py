@@ -11,7 +11,11 @@ from ..client import HotmartMCPClient
 from ..exceptions import handle_sdk_errors
 
 
-def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
+def _filter_none(**kwargs: Any) -> dict[str, Any]:
+    return {k: v for k, v in kwargs.items() if v is not None}
+
+
+def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     """Register sales tools. See SPEC.md §4.1."""
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
@@ -32,10 +36,12 @@ def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get sales history with buyer, product, and payment details."""
-        kwargs: dict[str, Any] = {}
-        for key, val in locals().items():
-            if key not in ("mcp", "client", "kwargs") and val is not None:
-                kwargs[key] = val
+        kwargs = _filter_none(
+            product_id=product_id, start_date=start_date, end_date=end_date, sales_source=sales_source,
+            transaction=transaction, buyer_name=buyer_name, buyer_email=buyer_email,
+            transaction_status=transaction_status, payment_type=payment_type, offer_code=offer_code,
+            commission_as=commission_as, max_results=max_results, page_token=page_token,
+        )
         result = await client.get_sales_history(**kwargs)
         return json.dumps(result, indent=2)
 
@@ -55,10 +61,12 @@ def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get aggregated sales commission values."""
-        kwargs: dict[str, Any] = {}
-        for key, val in locals().items():
-            if key not in ("mcp", "client", "kwargs") and val is not None:
-                kwargs[key] = val
+        kwargs = _filter_none(
+            product_id=product_id, start_date=start_date, end_date=end_date, sales_source=sales_source,
+            affiliate_name=affiliate_name, payment_type=payment_type, offer_code=offer_code,
+            transaction=transaction, transaction_status=transaction_status,
+            max_results=max_results, page_token=page_token,
+        )
         result = await client.get_sales_summary(**kwargs)
         return json.dumps(result, indent=2)
 
@@ -79,10 +87,12 @@ def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get sales participant and user data."""
-        kwargs: dict[str, Any] = {}
-        for key, val in locals().items():
-            if key not in ("mcp", "client", "kwargs") and val is not None:
-                kwargs[key] = val
+        kwargs = _filter_none(
+            product_id=product_id, start_date=start_date, end_date=end_date, buyer_email=buyer_email,
+            buyer_name=buyer_name, sales_source=sales_source, transaction=transaction,
+            affiliate_name=affiliate_name, commission_as=commission_as, transaction_status=transaction_status,
+            max_results=max_results, page_token=page_token,
+        )
         result = await client.get_sales_participants(**kwargs)
         return json.dumps(result, indent=2)
 
@@ -99,10 +109,11 @@ def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get commission breakdown by role per transaction."""
-        kwargs: dict[str, Any] = {}
-        for key, val in locals().items():
-            if key not in ("mcp", "client", "kwargs") and val is not None:
-                kwargs[key] = val
+        kwargs = _filter_none(
+            product_id=product_id, start_date=start_date, end_date=end_date, transaction=transaction,
+            commission_as=commission_as, transaction_status=transaction_status,
+            max_results=max_results, page_token=page_token,
+        )
         result = await client.get_sales_commissions(**kwargs)
         return json.dumps(result, indent=2)
 
@@ -119,10 +130,11 @@ def register_sales_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get price, fee, and VAT details per transaction."""
-        kwargs: dict[str, Any] = {}
-        for key, val in locals().items():
-            if key not in ("mcp", "client", "kwargs") and val is not None:
-                kwargs[key] = val
+        kwargs = _filter_none(
+            product_id=product_id, start_date=start_date, end_date=end_date, transaction=transaction,
+            transaction_status=transaction_status, payment_type=payment_type,
+            max_results=max_results, page_token=page_token,
+        )
         result = await client.get_sales_price_details(**kwargs)
         return json.dumps(result, indent=2)
 

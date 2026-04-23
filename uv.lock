@@ -647,7 +647,7 @@ wheels = [
 
 [[package]]
 name = "hotmart-mcp"
-version = "0.1.0"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "fastmcp" },
@@ -669,7 +669,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastmcp", specifier = ">=3.2.0,<4.0" },
-    { name = "hotmart-python", git = "https://github.com/im-voracity/hotmart-python.git?rev=master" },
+    { name = "hotmart-python", specifier = ">=1.1,<2.0" },
     { name = "pydantic", specifier = ">=2.7,<3.0" },
     { name = "pydantic-settings", specifier = ">=2.7.0,<3.0" },
 ]
@@ -687,10 +687,14 @@ dev = [
 [[package]]
 name = "hotmart-python"
 version = "1.1.0"
-source = { git = "https://github.com/im-voracity/hotmart-python.git?rev=master#8758f25563fdc9ef509e025156d1cdc083745fc7" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
     { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/82/b8/9992b84cbbf6e7ca72f4ce5d93d80cc859da4030e370733c49cb89a1b1be/hotmart_python-1.1.0.tar.gz", hash = "sha256:fde50df6c10b3f4cc82b1aea5dd23f621e9165630e0daaafd34346054c3af890", size = 97131, upload-time = "2026-04-23T04:42:30.366Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/01/31/43d1201a26cafa43e5d2e179986ad3b1a93fb9aede1516db100f4db52e1e/hotmart_python-1.1.0-py3-none-any.whl", hash = "sha256:3189d8956d0c7484f73582ee1c1ef26474869bdf1cb524482f95d5ae8d8b2b19", size = 37445, upload-time = "2026-04-23T04:42:28.879Z" },
 ]
 
 [[package]]

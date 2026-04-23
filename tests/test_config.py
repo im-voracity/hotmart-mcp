@@ -16,9 +16,9 @@ class TestHotmartMCPConfig:
 
         config = HotmartMCPConfig()  # type: ignore[call-arg]
 
-        assert config.client_id == "test-id"
-        assert config.client_secret == "test-secret"
-        assert config.basic == "Basic dGVzdA=="
+        assert config.client_id.get_secret_value() == "test-id"
+        assert config.client_secret.get_secret_value() == "test-secret"
+        assert config.basic.get_secret_value() == "Basic dGVzdA=="
 
     def test_config_missing_client_id(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.delenv("HOTMART_CLIENT_ID", raising=False)

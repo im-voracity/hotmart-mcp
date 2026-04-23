@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pydantic import field_validator
+from pydantic import SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -17,15 +17,15 @@ class HotmartMCPConfig(BaseSettings):
         extra="ignore",
     )
 
-    client_id: str
-    client_secret: str
-    basic: str
+    client_id: SecretStr
+    client_secret: SecretStr
+    basic: SecretStr
     sandbox: bool = False
 
     @field_validator("client_id", "client_secret", "basic")
     @classmethod
-    def _must_not_be_empty(cls, v: str) -> str:
-        if not v.strip():
+    def _must_not_be_empty(cls, v: SecretStr) -> SecretStr:
+        if not v.get_secret_value().strip():
             msg = "must not be empty"
             raise ValueError(msg)
         return v

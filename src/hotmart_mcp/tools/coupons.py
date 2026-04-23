@@ -11,7 +11,7 @@ from ..client import HotmartMCPClient
 from ..exceptions import handle_sdk_errors
 
 
-def register_coupon_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
+def register_coupon_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     """Register coupon tools. See SPEC.md §4.4."""
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))

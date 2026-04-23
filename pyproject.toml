@@ -1,6 +1,6 @@
 [project]
 name = "hotmart-mcp"
-version = "0.1.0"
+version = "1.0.0"
 description = "MCP server for the Hotmart API"
 readme = "README.md"
 license = "Apache-2.0"
@@ -9,7 +9,7 @@ authors = [{ name = "im-voracity" }]
 keywords = ["hotmart", "mcp", "model-context-protocol", "ai"]
 dependencies = [
     "fastmcp>=3.2.0,<4.0",
-    "hotmart-python @ git+https://github.com/im-voracity/hotmart-python.git@master",
+    "hotmart-python>=1.1,<2.0",
     "pydantic>=2.7,<3.0",
     "pydantic-settings>=2.7.0,<3.0",
 ]
@@ -20,9 +20,6 @@ hotmart-mcp = "hotmart_mcp.__main__:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.hatch.metadata]
-allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/hotmart_mcp"]

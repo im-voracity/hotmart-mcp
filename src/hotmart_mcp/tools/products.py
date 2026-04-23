@@ -11,7 +11,11 @@ from ..client import HotmartMCPClient
 from ..exceptions import handle_sdk_errors
 
 
-def register_product_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
+def _filter_none(**kwargs: Any) -> dict[str, Any]:
+    return {k: v for k, v in kwargs.items() if v is not None}
+
+
+def register_product_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     """Register product tools. See SPEC.md §4.3."""
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
@@ -24,10 +28,7 @@ def register_product_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """List products with filtering options."""
-        kwargs: dict[str, Any] = {}
-        for key, val in locals().items():
-            if key not in ("mcp", "client", "kwargs") and val is not None:
-                kwargs[key] = val
+        kwargs = _filter_none(id=id, status=status, format=format, max_results=max_results, page_token=page_token)
         result = await client.list_products(**kwargs)
         return json.dumps(result, indent=2)
 
@@ -39,11 +40,7 @@ def register_product_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get offers and payment options for a product."""
-        kwargs: dict[str, Any] = {}
-        if max_results is not None:
-            kwargs["max_results"] = max_results
-        if page_token is not None:
-            kwargs["page_token"] = page_token
+        kwargs = _filter_none(max_results=max_results, page_token=page_token)
         result = await client.get_product_offers(ucode, **kwargs)
         return json.dumps(result, indent=2)
 
@@ -55,10 +52,6 @@ def register_product_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None
         page_token: Annotated[str | None, Field(description="Pagination token")] = None,
     ) -> str:
         """Get subscription plans for a product."""
-        kwargs: dict[str, Any] = {}
-        if max_results is not None:
-            kwargs["max_results"] = max_results
-        if page_token is not None:
-            kwargs["page_token"] = page_token
+        kwargs = _filter_none(max_results=max_results, page_token=page_token)
         result = await client.get_product_plans(ucode, **kwargs)
         return json.dumps(result, indent=2)

@@ -3,6 +3,7 @@ from __future__ import annotations
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+from pydantic import SecretStr
 
 from hotmart_mcp.client import HotmartMCPClient
 from hotmart_mcp.config import HotmartMCPConfig
@@ -11,9 +12,9 @@ from hotmart_mcp.config import HotmartMCPConfig
 @pytest.fixture
 def mock_config() -> HotmartMCPConfig:
     return HotmartMCPConfig(
-        client_id="test-id",
-        client_secret="test-secret",
-        basic="Basic dGVzdA==",
+        client_id=SecretStr("test-id"),
+        client_secret=SecretStr("test-secret"),
+        basic=SecretStr("Basic dGVzdA=="),
     )
 
 

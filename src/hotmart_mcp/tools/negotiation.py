@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Annotated, Any
+from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.tools.tool import ToolAnnotations
@@ -11,7 +11,7 @@ from ..client import HotmartMCPClient
 from ..exceptions import handle_sdk_errors
 
 
-def register_negotiation_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
+def register_negotiation_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     """Register negotiation tools. See SPEC.md §4.7."""
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=False))

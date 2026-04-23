@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Literal
 
 from fastmcp import FastMCP
 
+from ..client import HotmartMCPClient
 from .club import register_club_tools
 from .coupons import register_coupon_tools
 from .events import register_event_tools
@@ -73,7 +74,7 @@ def _allowed_tools(mode: ToolMode) -> frozenset[str]:
     return _VALID_MODES[mode]
 
 
-def register_all_tools(mcp: FastMCP, client: Any, *, mode: ToolMode = "essential") -> None:
+def register_all_tools(mcp: FastMCP, client: HotmartMCPClient, *, mode: ToolMode = "essential") -> None:
     """Register all tools then remove those not in the active mode.
 
     See SPEC.md §3.2 for the filtering mechanism.

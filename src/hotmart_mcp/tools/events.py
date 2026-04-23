@@ -11,7 +11,7 @@ from ..client import HotmartMCPClient
 from ..exceptions import handle_sdk_errors
 
 
-def register_event_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
+def register_event_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     """Register event tools. See SPEC.md §4.6."""
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))

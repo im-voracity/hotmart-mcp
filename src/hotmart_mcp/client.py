@@ -32,9 +32,9 @@ class HotmartMCPClient:
 
     def __init__(self, config: HotmartMCPConfig) -> None:
         self._sdk = AsyncHotmart(
-            client_id=config.client_id,
-            client_secret=config.client_secret,
-            basic=config.basic,
+            client_id=config.client_id.get_secret_value(),
+            client_secret=config.client_secret.get_secret_value(),
+            basic=config.basic.get_secret_value(),
             sandbox=config.sandbox,
         )
 

@@ -11,7 +11,7 @@ from ..client import HotmartMCPClient
 from ..exceptions import handle_sdk_errors
 
 
-def register_club_tools(mcp: FastMCP, client: HotmartMCPClient | Any) -> None:
+def register_club_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     """Register club/members area tools. See SPEC.md §4.5."""
 
     @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
