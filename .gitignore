@@ -14,3 +14,5 @@ build/
 .coverage
 htmlcov/
 .idea/
+CLAUDE.md
+SPEC.md
