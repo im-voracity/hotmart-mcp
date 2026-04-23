@@ -1,0 +1,81 @@
+[project]
+name = "hotmart-mcp"
+version = "0.1.0"
+description = "MCP server for the Hotmart API"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [{ name = "im-voracity" }]
+keywords = ["hotmart", "mcp", "model-context-protocol", "ai"]
+dependencies = [
+    "fastmcp>=3.2.0,<4.0",
+    "hotmart-python @ git+https://github.com/im-voracity/hotmart-python.git@master",
+    "pydantic>=2.7,<3.0",
+    "pydantic-settings>=2.7.0,<3.0",
+]
+
+[project.scripts]
+hotmart-mcp = "hotmart_mcp.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hotmart_mcp"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=6.0",
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "pip-audit>=2.7",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = ["integration: tests that require real Hotmart credentials"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/hotmart_mcp/tools/*.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["hotmart_mcp"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["hotmart.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["fastmcp.*"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["hotmart_mcp"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
