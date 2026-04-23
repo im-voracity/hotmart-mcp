@@ -40,12 +40,21 @@ def register_subscription_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     ) -> str:
         """List subscriptions with filtering options."""
         kwargs = _filter_none(
-            product_id=product_id, plan_id=plan_id, accession_date=accession_date,
-            end_accession_date=end_accession_date, status=status, subscriber_code=subscriber_code,
-            subscriber_email=subscriber_email, transaction=transaction, trial=trial,
-            cancelation_date=cancelation_date, end_cancelation_date=end_cancelation_date,
-            date_next_charge=date_next_charge, end_date_next_charge=end_date_next_charge,
-            max_results=max_results, page_token=page_token,
+            product_id=product_id,
+            plan_id=plan_id,
+            accession_date=accession_date,
+            end_accession_date=end_accession_date,
+            status=status,
+            subscriber_code=subscriber_code,
+            subscriber_email=subscriber_email,
+            transaction=transaction,
+            trial=trial,
+            cancelation_date=cancelation_date,
+            end_cancelation_date=end_cancelation_date,
+            date_next_charge=date_next_charge,
+            end_date_next_charge=end_date_next_charge,
+            max_results=max_results,
+            page_token=page_token,
         )
         result = await client.list_subscriptions(**kwargs)
         return json.dumps(result, indent=2)
@@ -63,9 +72,13 @@ def register_subscription_tools(mcp: FastMCP, client: HotmartMCPClient) -> None:
     ) -> str:
         """Get subscription statistics summary."""
         kwargs = _filter_none(
-            product_id=product_id, subscriber_code=subscriber_code, accession_date=accession_date,
-            end_accession_date=end_accession_date, date_next_charge=date_next_charge,
-            max_results=max_results, page_token=page_token,
+            product_id=product_id,
+            subscriber_code=subscriber_code,
+            accession_date=accession_date,
+            end_accession_date=end_accession_date,
+            date_next_charge=date_next_charge,
+            max_results=max_results,
+            page_token=page_token,
         )
         result = await client.get_subscription_summary(**kwargs)
         return json.dumps(result, indent=2)
